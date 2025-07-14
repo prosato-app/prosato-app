@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"target": "ES2022",
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"strict": true,
+		"module": "ESNext",
+		"sourceMap": true,
+		"declaration": true,
+		"lib": [
+			"ES2022",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		}
+	},
+	"include": [
+		"src",
+		"vite-env.d.ts"
+	]
+}

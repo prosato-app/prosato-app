@@ -1,0 +1,25 @@
+on: pull_request
+
+name: Lint
+
+jobs:
+    check:
+        name: Lint
+        runs-on: ubuntu-latest
+        container:
+            image: node:22.17.0
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup NodeJS
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "22.17.0"
+
+            - name: Install packages
+              run: npm ci
+
+            - name: Check Lint
+              run: npx eslint 'src/**'
