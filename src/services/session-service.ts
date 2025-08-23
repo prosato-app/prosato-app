@@ -1,4 +1,4 @@
-import type { ISigninInput, ISigninOutput } from "@/interfaces/session-interface"
+import type { IRenewAccessTokenOutput, ISigninInput, ISigninOutput } from "@/interfaces/session-interface"
 import ApiUtil from "@/utils/api-util"
 
 
@@ -14,6 +14,12 @@ class SessionService {
 
 	async signOut(): Promise<void> {
 		await ApiUtil.client.post("/sign-out")
+	}
+
+	async generateNewAccessToken(): Promise<IRenewAccessTokenOutput> {
+		const response = await ApiUtil.client.post<IRenewAccessTokenOutput>("/refresh-token")
+
+		return response.data
 	}
 }
 

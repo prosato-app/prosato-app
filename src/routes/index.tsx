@@ -1,6 +1,7 @@
-import Pages from "@/pages"
-import Dashboard from "@/pages/Dashboard"
-import SignIn from "@/pages/SignIn"
+import Pages from "@/pages/private"
+import Home from "@/pages/private/Home"
+import Proposals from "@/pages/private/Proposals"
+import SignIn from "@/pages/public/SignIn"
 import useAuthStore from "@/stores/auth-state-store"
 import React from "react"
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom"
@@ -16,12 +17,14 @@ const AuthGuard: React.FC<AuthGuardProps> = (props) => {
 		isAuthenticated
 	} = useAuthStore()
 
+	// Protect private routes - redirect to sign-in if not authenticated
 	if (!isAuthenticated && isPrivate) {
 		return <Navigate to="/sign-in" replace />
 	}
 
+	// Redirect authenticated users away from auth pages
 	if (isAuthenticated && !isPrivate) {
-		return <Navigate to="/dashboard" replace />
+		return <Navigate to="/proposals" replace />
 	}
 
 	return <Outlet />
@@ -30,7 +33,7 @@ const AuthGuard: React.FC<AuthGuardProps> = (props) => {
 const AuthLayout = () => {
 	return (
 		<div className="flex w-full h-full">
-			<div className="w-full h-full">
+			<div className="flex w-full h-full">
 				<Outlet />
 			</div>
 		</div>
@@ -52,7 +55,7 @@ const PrivateLayout = () => {
 						carregando...
 					</div>
 				) : (
-					<div className="w-full h-full">
+					<div className="flex flex-1 h-full">
 						<Outlet />
 					</div>
 				)}
@@ -74,7 +77,8 @@ const Router = () => {
 
 				<Route element={<AuthGuard isPrivate={true} />}>
 					<Route element={<PrivateLayout />}>
-						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/proposals" element={<Proposals />} />
+						<Route path="/ia" element={<Home />} />
 					</Route>
 				</Route>
 			</Routes>

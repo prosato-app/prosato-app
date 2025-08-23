@@ -1,5 +1,5 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.ts"]
+	"include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.ts", "tailwind.config.ts"]
   }
   
