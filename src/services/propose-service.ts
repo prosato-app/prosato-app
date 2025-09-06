@@ -1,6 +1,20 @@
-import type { ChangeCardOrderRequest, CreateProposal, MoveCardBetweenStagesRequest, RetrieveProposalsOutput, StagesFormattedForList } from "@/interfaces/propose-interface"
+import type {
+	ChangeCardOrderRequest,
+	CreateProposal,
+	MoveCardBetweenStagesRequest,
+	RetrieveProposalsOutput,
+	StagesFormattedForList
+} from "@/interfaces/propose-interface"
 import ApiUtil from "@/utils/api-util"
 
+export type CreateProposalRequest = {
+	title: string
+	expirationDate: Date
+}
+
+export type CreateProposalResponse = {
+	proposalId: string
+}
 
 class ProposeService {
 	async getProposes(): Promise<StagesFormattedForList> {
@@ -9,13 +23,13 @@ class ProposeService {
 		return response.data.stages
 	}
 
-	async createProposal(input: CreateProposal): Promise<object> {
-		const response = await ApiUtil.client.post("/proposal", {
+	async createProposal(input: CreateProposalRequest): Promise<string> {
+		const response = await ApiUtil.client.post<CreateProposalResponse>("/proposal", {
 			...input,
 			expirationDate: new Date()
 		})
 
-		return response.data
+		return response.data.proposalId
 	}
 
 	async changeCardOrder(input: ChangeCardOrderRequest): Promise<void> {

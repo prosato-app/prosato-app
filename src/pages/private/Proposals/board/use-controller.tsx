@@ -1,4 +1,4 @@
-import useDragAndDrop from "@/pages/private/Proposals/board/useDragAndDrop.tsx"
+import useDragAndDrop from "@/pages/private/Proposals/board/useDragAndDrop"
 import useBoardStore from "@/stores/board-store"
 import proposeService from "@/services/propose-service"
 import { useEffect } from "react"

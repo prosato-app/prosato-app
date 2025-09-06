@@ -1,5 +1,6 @@
 import Pages from "@/pages/private"
 import Home from "@/pages/private/Home"
+import { ProposalEditor } from "@/pages/private/ProposalEditor"
 import Proposals from "@/pages/private/Proposals"
 import SignIn from "@/pages/public/SignIn"
 import useAuthStore from "@/stores/auth-state-store"
@@ -64,6 +65,28 @@ const PrivateLayout = () => {
 	)
 }
 
+const EditorLayout = () => {
+	const {
+		loading
+	} = useAuthStore()
+
+	return (
+		<div className="w-full h-full overflow-hidden">
+			{loading ? (
+				<div
+					className="w-full h-full flex items-center justify-center"
+				>
+					carregando...
+				</div>
+			) : (
+				<div className="w-full h-full">
+					<Outlet />
+				</div>
+			)}
+		</div>
+	)
+}
+
 const Router = () => {
 	return (
 		<BrowserRouter>
@@ -79,6 +102,10 @@ const Router = () => {
 					<Route element={<PrivateLayout />}>
 						<Route path="/proposals" element={<Proposals />} />
 						<Route path="/ia" element={<Home />} />
+					</Route>
+					<Route element={<EditorLayout />}>
+						<Route path="/proposal-editor" element={<ProposalEditor />} />
+						<Route path="/proposal-editor/:id" element={<ProposalEditor />} />
 					</Route>
 				</Route>
 			</Routes>

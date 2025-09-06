@@ -1,0 +1,60 @@
+/* Custom styles for Puck component drawer */
+
+/* Sidebar components container */
+.Puck-sideBarInner {
+  padding: 1rem !important;
+}
+
+/* Components list styling */
+.Puck-componentList {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+}
+
+/* Category sections */
+.Puck-componentList > div {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+/* Category titles */
+.Puck-componentList > div > div:first-child {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #374151 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  margin-bottom: 0 !important;
+}
+
+/* Components grid container within each category */
+.Puck-componentList > div > div:last-child {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 0.5rem !important;
+}
+
+/* Individual component items */
+.Puck-componentList > div > div:last-child > * {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Remove any default margins/padding from component items */
+.Puck-componentItem {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure proper drag cursor */
+.Puck-componentItem:hover {
+  cursor: grab !important;
+}
+
+.Puck-componentItem:active {
+  cursor: grabbing !important;
+}

@@ -5,11 +5,15 @@ import {
 	User as ClientIcon,
 	DollarSign as ProposalCostIcon,
 	EllipsisVertical as MoreOptionsMenuIcon,
-	Flag as PriorityIcon
+	Flag as PriorityIcon,
+	Edit as EditIcon
 } from "lucide-react"
 import type { UniqueIdentifier } from "@dnd-kit/core"
-import useController from "@/pages/private/Proposals/board/stage/card/use-controller.tsx"
+import useController from "@/pages/private/Proposals/board/stage/card/use-controller"
 import { memo } from "react"
+import { Link } from "react-router-dom"
+import IconButton from "@/components/IconButton"
+import Popover from "@/components/Popover"
 
 type CardProps = {
 	id: UniqueIdentifier
@@ -26,7 +30,9 @@ const Card = (props: CardProps) => {
 
 	const {
 		sortable,
-		cardInfo
+		cardInfo,
+		handleRedirectToEditProposal,
+		handleDeleteProposal
 	} = useController({
 		cardId: id,
 		containerId
@@ -64,9 +70,36 @@ const Card = (props: CardProps) => {
 					<Tag type="SUCCESS" name="250,00R$" icon={<ProposalCostIcon className="w-3 h-3" />} />
 					<Tag type="INFO" name="Jun 10" icon={<ExpirationDateIcon className="w-3 h-3" />} />
 				</div>
+				<div className="flex gap-2 mt-2">
+					<Link
+						to={`/proposal-editor/${id}`}
+						className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded transition-colors"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<EditIcon className="w-3 h-3" />
+						Editar Proposta
+					</Link>
+				</div>
 			</div>
 			<div>
-				<MoreOptionsMenuIcon style={{ fill: customStyles.colors.neutral[500] }} />
+				<Popover
+					menuOptions={[
+						{
+							name: "Editar Proposta",
+							onClick: handleRedirectToEditProposal
+						},
+						{
+							name: "Excluir Proposta",
+							onClick: handleDeleteProposal
+						}
+					]}
+					position="left"
+					trigger="click"
+				>
+					<IconButton>
+						<MoreOptionsMenuIcon style={{ fill: customStyles.colors.neutral[500] }} />
+					</IconButton>
+				</Popover>
 			</div>
 		</div>
 	)

@@ -2,6 +2,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import type { UniqueIdentifier } from "@dnd-kit/core"
 import useBoardStore from "@/stores/board-store"
 import type { StageType } from "@/interfaces/stage-interface"
+import { useNavigate } from "react-router-dom"
 
 type UseControllerProps = {
 	cardId: UniqueIdentifier
@@ -27,6 +28,8 @@ const useController = (props: UseControllerProps) => {
 		}
 	})
 
+	const navigate = useNavigate()
+
 	const {
 		stages
 	} = useBoardStore()
@@ -42,6 +45,14 @@ const useController = (props: UseControllerProps) => {
 		return null
 	}
 
+	const handleRedirectToEditProposal = () => {
+		navigate(`/proposal-editor/${cardInfo?.id}`)
+	}
+
+	const handleDeleteProposal = () => {
+		console.log(1)
+	}
+
 	const cardInfo = getCardInfo()
 
 	return {
@@ -55,7 +66,9 @@ const useController = (props: UseControllerProps) => {
 			attributes,
 			active,
 			over
-		}
+		},
+		handleRedirectToEditProposal,
+		handleDeleteProposal
 	}
 }
 

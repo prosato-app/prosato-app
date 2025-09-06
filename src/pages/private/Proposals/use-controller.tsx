@@ -2,11 +2,12 @@ import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
-import type { CreateProposal } from "@/interfaces/propose-interface.ts"
-import ProposeService from "@/services/propose-service.ts"
+import ProposeService, { type CreateProposalRequest } from "@/services/propose-service.ts"
+import { useNavigate } from "react-router-dom"
 
 const createProposalSchema = z.object({
-	title: z.string().nonempty({ error: "O nome é obrigatorio" })
+	title: z.string().nonempty({ error: "O nome é obrigatorio" }),
+	expirationDate: z.date()
 })
 
 const useController = () => {
@@ -14,14 +15,18 @@ const useController = () => {
 		handleSubmit: hookFormSubmit,
 		register,
 		formState: { errors }
-	} = useForm<CreateProposal>({
+	} = useForm<CreateProposalRequest>({
 		resolver: zodResolver(createProposalSchema)
 	})
 
-	const handleCreateProposal = hookFormSubmit(async (input: CreateProposal) => {
+	const navigate = useNavigate()
+
+	const handleCreateProposal = hookFormSubmit(async (input: CreateProposalRequest) => {
 		try {
 
-			await ProposeService.createProposal(input)
+			const proposalId = await ProposeService.createProposal(input)
+
+			navigate(`/proposal-editor:${proposalId}`)
 
 			toast.success("Autenticado")
 		} catch (error) {
